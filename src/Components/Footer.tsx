@@ -25,7 +25,7 @@ const Footer = () => {
         <a
           className="hover:opacity-[0.5]"
           target="_blank"
-          href="https://linkedin.com/in/priyanshu-li"
+          href="https://linkedin.com/in/priyanshukayarkar"
         >
           <IoLogoLinkedin className="w-8 h-8 cursor-pointer lg:w-10 lg:h-10 hover:opacity-[0.5] " />
         </a>
