@@ -19,6 +19,17 @@ const Shipping = () => {
     setShippingInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const [error, setError] = useState("");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simple validation
+    if (!shippingInfo.address || !shippingInfo.city || !shippingInfo.state || !shippingInfo.country || !shippingInfo.pinCode) {
+      setError("Please fill all fields.");
+      return;
+    }
+    setError("");
+    navigate("/oders");
+  };
   return (
     <div className="w-full h-screen pt-[6rem] px-5 md:pt-[10rem] z-50 md:px-[3rem] lg:px-[5rem]  gap-y-2  font-space mb-[3rem] md:mb-[5rem] lg:mb-[7rem] ">
       <button
@@ -31,12 +42,13 @@ const Shipping = () => {
       </button>
 
       <form
-        action=""
+        onSubmit={handleSubmit}
         className="flex flex-col px-16 md:px-24  gap-y-6  mt-7 lg:px-[25vw] md:gap-y-8 lg:gap-y-10 "
       >
         <h1 className=" text-[1.3rem] tracking-wide text-center underline font-semibold md:text-[1.5rem] lg:text-[1.7rem] ">
           Shipping Address
         </h1>
+        {error && <div className="text-red-500 text-center mb-2">{error}</div>}
         <input
           className="border border-zinc-700 rounded-sm px-2 py-1 bg-transparent text-black outline-yellow "
           required
