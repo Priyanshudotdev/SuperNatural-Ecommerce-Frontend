@@ -5,33 +5,47 @@ import AddSvg from "../../assets/svgs/AddSvg";
 // import AddSvg from "../assets/svgs/AddSvg";
 // import MinusSvg from "../assets/svgs/MinusSvg";
 
-interface productDetails {
-  productimageLink: string;
-  productTitle: string;
+
+export interface productDetails {
+  id: string;
+  name: string;
+  price: number;
+  qty: number;
+  // Optionally keep old props for compatibility if needed
+  productimageLink?: string;
+  productTitle?: string;
   productSize?: string;
-  productPrice: string;
+  productPrice?: string | number;
 }
 
 const ShoppingCard: React.FC<productDetails> = ({
-  productPrice,
-  productTitle,
+  id,
+  name,
+  price,
+  qty,
   productimageLink,
+  productTitle,
   productSize,
+  productPrice,
 }) => {
-  const [numberOfItem, setNumberOfItem] = useState<number>(1);
+  // Use qty as initial value if provided, else default to 1
+  const [numberOfItem, setNumberOfItem] = useState<number>(qty ?? 1);
   return (
     <div className="w-full mt-2 md:mt-4 lg:mt-8 h-[11.5rem] flex items-center gap-6 md:gap-8 lg:gap-10 p-4  border-b border-b-black/25 relative ">
-      <img
-        className="w-24 h-24 mb-10 object-contain md:w-32 md:h-32 lg:w-36 lg:h-36 md:mb-6 xl:h-40 xl:w-40 xl:mb-2 cursor-pointer "
-        src={productimageLink}
-        alt={productTitle}
-      />
+      {/* Optionally render image if productimageLink is provided */}
+      {productimageLink && (
+        <img
+          className="w-24 h-24 mb-10 object-contain md:w-32 md:h-32 lg:w-36 lg:h-36 md:mb-6 xl:h-40 xl:w-40 xl:mb-2 cursor-pointer "
+          src={productimageLink}
+          alt={productTitle || name}
+        />
+      )}
       <div className="flex flex-col w-full h-full gap-y-4  ">
         {/* First Part */}
         <div className="flex items-start justify-between w-full cursor-pointer">
           <div className="flex flex-col  ">
             <h1 className="text-lg font-semibold md:text-[1.25rem] opacity-[0.8] md:leading-[2rem] ">
-              {productTitle}
+              {productTitle || name}
             </h1>
             <p className="text-sm md:text-[1rem] opacity-70">
               {productSize ? `Size: ${productSize}` : ""}
@@ -62,7 +76,7 @@ const ShoppingCard: React.FC<productDetails> = ({
               <AddSvg />
             </button>
           </div>
-          <p className="text-lg lg:text-xl">${productPrice}</p>
+          <p className="text-lg lg:text-xl">₹{typeof productPrice !== 'undefined' ? productPrice : price}</p>
         </div>
       </div>
     </div>
