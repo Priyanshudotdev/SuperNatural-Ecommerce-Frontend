@@ -6,41 +6,27 @@ import { useNavigate } from "react-router-dom";
 const Cart: React.FC = () => {
   const navigate = useNavigate();
 
-  const [
-    totalPrice,
-    //  setTotalPrice
-  ] = useState<number>(9955);
 
-  const [couponCode, setCouponCode] = useState<string>("");
-  const [
-    discount,
-    //  setDiscount
-  ] = useState<number>(0);
 
-  const [isValidCouponCode, setIsValidCouponCode] = useState<boolean>(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [discount] = useState(0);
+
+  const [isValidCouponCode, setIsValidCouponCode] = useState(false);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
-      if (Math.random() > 0.5) {
-        setIsValidCouponCode(true);
-      } else {
-        setIsValidCouponCode(false);
-      }
+      setIsValidCouponCode(Math.random() > 0.5);
     }, 1000);
-    return () => {
-      clearTimeout(timeOutId);
-    };
+    return () => clearTimeout(timeOutId);
   }, [couponCode]);
 
-  // Example cart items
   const cartItems: productDetails[] = [
     { id: "9900", name: "Plant Based Food Color", price: 8900, qty: 2 },
     { id: "9901", name: "Softies - Rainbow", price: 7500, qty: 1 },
   ];
 
-  // Calculate total price
+
   const calculatedTotal = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0);
-  // Simulate discount
   const finalTotal = calculatedTotal - discount;
 
   return (
